@@ -191,7 +191,7 @@ h1, h2, h3, h4, h5, h6 {
     height: 3.2rem;
     position: relative;
     vertical-align: middle;
-    transition: background 0.25s;
+    transition: 0.25s;
 }
 
 .toggle-switch:before, .toggle-switch:after {
