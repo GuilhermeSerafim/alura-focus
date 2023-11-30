@@ -8,23 +8,27 @@ const titulo = document.querySelector('.app__title');
 
 btFoco.addEventListener('click', () => {
     alterarContexto('foco');
+    btFoco.classList.add('active');
 })
 
 btCurto.addEventListener('click', () => {
     alterarContexto('descanso-curto');
+    btCurto.classList.add('active');
 })
 
 btLongo.addEventListener('click', () => {
     alterarContexto('descanso-longo');
+    btLongo.classList.add('active');
 })
 
+//Identificamos código repetido, logo criamos uma função para deixar o código mais inxtuo
 function alterarContexto(contexto) {
     html.setAttribute('data-contexto', contexto);
     banner.setAttribute('src', `/imagens/${contexto}.png`);
     //O Inner html também é usado para fazer lista com +=
     switch (contexto) {
         case 'foco':
-            titulo.innerHTML = `Que tal dar uma respirada? <br>
+            titulo.innerHTML = `Otimize sua produtividade, <br>
             <strong class="app__title-strong">mergulhe no que importa.</strong>`;
             break;
         case 'descanso-curto':
