@@ -1,33 +1,16 @@
-//Elementos
+// Identificação dos elementos do DOM
 const html = document.querySelector('html');
 const btFoco = document.querySelector('.app__card-button--foco');
 const btCurto = document.querySelector('.app__card-button--curto');
 const btLongo = document.querySelector('.app__card-button--longo');
 const banner = document.querySelector('.app__image');
 const titulo = document.querySelector('.app__title');
-const botoes = document.querySelectorAll('.app__card-button'); //Array de botoes
+const listaDeBotoes = document.querySelectorAll('.app__card-button'); //Array de botoes
 
-//Musica
-const musicaFocoInput = document.querySelector('#alternar-musica');
-const musica = new Audio('/sons/luna-rise-part-one.mp3');
-musica.loop = true;
-
-//Tempo
-let tempoDecorridoEmSegundos = 5;
-const btComecarPausar = document.querySelector('#start-pause');
-let intervaloId = null;
-
-musicaFocoInput.addEventListener('change', () => {
-    if (musica.paused) {
-        musica.play();
-    } else {
-        musica.pause();
-    }
-})
-
+// Manipulando o dom da página inteira com os estilos e textos
 btFoco.addEventListener('click', () => {
-    alterarContexto('foco'); //Limpa os estilos
-    btFoco.classList.add('active'); //Adiciona o estilo de ativo em seguida
+    alterarContexto('foco');
+    btFoco.classList.add('active'); // Adiciona o estilo de ativo
 })
 
 btCurto.addEventListener('click', () => {
@@ -40,14 +23,14 @@ btLongo.addEventListener('click', () => {
     btLongo.classList.add('active');
 })
 
-//Identificamos código repetido, logo criamos uma função para deixar o código mais inxuto
+// Identificamos código repetido, logo criamos uma função para deixar o código mais inxuto
 function alterarContexto(contexto) {
-    //Limpando estilos
-    botoes.forEach((contexto) => {
-        contexto.classList.remove('active');
+    // Limpa os estilos removendo a classe 'active' de todos os botões
+    listaDeBotoes.forEach((estilosASeremRemovidos) => {
+        estilosASeremRemovidos.classList.remove('active');
     })
 
-    //Alterando contexto e texto
+    // Altera o contexto e o texto
     html.setAttribute('data-contexto', contexto);
     banner.setAttribute('src', `/imagens/${contexto}.png`);
     switch (contexto) {
@@ -57,11 +40,11 @@ function alterarContexto(contexto) {
             break;
         case 'descanso-curto':
             titulo.innerHTML = `Que tal da uma respirada? <br>
-            <strong class="app__title-strong">Faça uma pausa curta.</strong>`
+                <strong class="app__title-strong">Faça uma pausa curta.</strong>`
             break;
         case 'descanso-longo':
             titulo.innerHTML = `Hora de voltar à superfície. <br>
-            <strong class="app__title-strong">Faça uma pausa longa.</strong>`
+                    <strong class="app__title-strong">Faça uma pausa longa.</strong>`
 
         default:
             break;
@@ -69,29 +52,48 @@ function alterarContexto(contexto) {
     //obs: O innerHTML também pode ser usado para fazer lista com +=
 }
 
-//Temporizador
+// Musica
+const musicaFocoInput = document.querySelector('#alternar-musica');
+const musica = new Audio('/sons/luna-rise-part-one.mp3');
+musica.loop = true;
+
+musicaFocoInput.addEventListener('change', () => {
+    if (musica.paused) {
+        musica.play();
+    } else {
+        musica.pause();
+    }
+});
+
+// Temporizador
+let tempoDecorridoEmSegundos = 5;
+const btComecarPausar = document.querySelector('#start-pause');
+let intervaloId = null;
+
 btComecarPausar.addEventListener('click', iniciarOuPausar);
 
 function iniciarOuPausar() {
-    //Criado para pausar
-    if(intervaloId) { //Esta condição verifica se intervaloId possui um valor
+    // Criado para pausar
+    if (intervaloId) { // Esta condição verifica se intervaloId possui um valor
         zerar();
-        return; 
+        return;
     }
-    intervaloId = setInterval(contagemRegressiva, 1000); //Loop que executa a função de acordo com determinado tempo
+    intervaloId = setInterval(contagemRegressiva, 1000);
 }
 
+// Criado para o nosso criterio de contagemRegressiva voltar ao padrão
+// E interromper o loop do setInverval
 function zerar() {
     clearInterval(intervaloId);
     intervaloId = null;
 }
 
 const contagemRegressiva = () => {
-    if(tempoDecorridoEmSegundos <= 0) {
+    if (tempoDecorridoEmSegundos <= 0) {
         zerar();
         alert('Tempo finalizado');
-        return; //O return é usado encerrar a execução de uma função
+        return; // O return é usado encerrar a execução de uma função
     }
-    tempoDecorridoEmSegundos -= 1; //Decremento
+    tempoDecorridoEmSegundos -= 1; // Decremento
     console.log("Temporizador: " + tempoDecorridoEmSegundos);
 }
