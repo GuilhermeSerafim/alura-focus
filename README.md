@@ -1,4 +1,4 @@
-# Projeto Fokus 🌊
+# **[Projeto Fokus](https://guilhermeserafim.github.io/alura-focus/)** 🌊
 
 Bem-vindo ao Projeto Fokus! Este repositório contém o projeto desenvolvido no curso de JavaScript na plataforma Alura. O Projeto Fokus é uma aplicação web inspirada no método Pomodoro, projetada para ajudar você a gerenciar o tempo de maneira eficaz, fornecendo temporizadores para períodos de foco e descanso, com a opção de alternar músicas para criar um ambiente propício à produtividade.
 
@@ -23,5 +23,6 @@ Inspirado no método Pomodoro, o Projeto Fokus incentiva você a "mergulhar fund
 
 Para mais informações ou dúvidas, entre em contato via [e-mail](mailto:guilerstudies@gmail.com).
 
+**[Acesse o Projeto Fokus](https://guilhermeserafim.github.io/alura-focus/)**
 ## 🌊 Mergulhe Fundo, Respire e Seja Produtivo! 🌊
 ![Mergulhe Fundo](https://media2.giphy.com/media/q1zYlcz024M44XUVg2/giphy.gif)
