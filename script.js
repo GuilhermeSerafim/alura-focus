@@ -118,8 +118,7 @@ const contagemRegressiva = () => {
 }
 
 function mostrarTempo() {
-    // Este valor é atualizado ao longo do tempo
-    // Decrementando-o durante a contagem regressiva ou sendo ajustado quando um novo contexto é escolhido.
+    // tempoDecorridoEmSegundos é mudado quando um novo contexto é escolhido.
     const tempo = new Date(tempoDecorridoEmSegundos * 1000);
     const tempoFormatado = tempo.toLocaleTimeString('pt-br', {minute: '2-digit', second: '2-digit'});
     temporizadorNaTela.innerHTML = `${tempoFormatado}`;
