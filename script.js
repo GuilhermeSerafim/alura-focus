@@ -9,22 +9,26 @@ const listaDeBotoes = document.querySelectorAll('.app__card-button'); //Array de
 
 // Manipulando o dom da página inteira com os estilos e textos
 btFoco.addEventListener('click', () => {
+    tempoDecorridoEmSegundos = 1500;
     alterarContexto('foco');
     btFoco.classList.add('active'); // Adiciona o estilo de ativo
 })
 
 btCurto.addEventListener('click', () => {
+    tempoDecorridoEmSegundos = 300;
     alterarContexto('descanso-curto');
     btCurto.classList.add('active');
 })
 
 btLongo.addEventListener('click', () => {
+    tempoDecorridoEmSegundos = 900;
     alterarContexto('descanso-longo');
     btLongo.classList.add('active');
 })
 
 // Identificamos código repetido, logo criamos uma função para deixar o código mais inxuto
 function alterarContexto(contexto) {
+    mostrarTempo();
     // Limpa os estilos removendo a classe 'active' de todos os botões
     listaDeBotoes.forEach((estilosASeremRemovidos) => {
         estilosASeremRemovidos.classList.remove('active');
@@ -104,7 +108,7 @@ function zerar() {
 
 const contagemRegressiva = () => {
     if (tempoDecorridoEmSegundos <= 0) {
-        // finalizadoAudio.play();
+        finalizadoAudio.play();
         zerar();
         alert('Tempo finalizado');
         return; // O return é usado encerrar a execução de uma função
@@ -114,9 +118,12 @@ const contagemRegressiva = () => {
 }
 
 function mostrarTempo() {
-    const tempo = tempoDecorridoEmSegundos;
-    temporizadorNaTela.innerHTML = `${tempo}`;
+    // Este valor é atualizado ao longo do tempo
+    // Decrementando-o durante a contagem regressiva ou sendo ajustado quando um novo contexto é escolhido.
+    const tempo = new Date(tempoDecorridoEmSegundos * 1000);
+    const tempoFormatado = tempo.toLocaleTimeString('pt-br', {minute: '2-digit', second: '2-digit'});
+    temporizadorNaTela.innerHTML = `${tempoFormatado}`;
 }
 
-//Usado para mostrar estaticamente
-mostrarTempo(); //Escopo global
+// Usado para mostrar estaticamente. Escopo global
+mostrarTempo();
