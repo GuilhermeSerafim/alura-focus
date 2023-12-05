@@ -9,7 +9,7 @@ Bem-vindo ao Projeto Fokus! Este repositório contém o projeto desenvolvido no 
 - **Controle de Música**: Alternância entre tocar e pausar a música de fundo.
 - **Interação Visual**: Mudanças visuais na interface, como alteração de texto, imagens e cores de fundo.
 
-## 🚀 Método Pomodoro e Temática
+## 🍅 Método Pomodoro e Temática
 
 Inspirado no método Pomodoro, o Projeto Fokus incentiva você a "mergulhar fundo" em suas tarefas, proporcionando períodos de foco intenso intercalados com pausas revigorantes. A temática aquática simboliza a profundidade do seu trabalho e a necessidade de momentos de respiração.
 
