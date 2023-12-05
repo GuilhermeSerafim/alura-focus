@@ -58,7 +58,7 @@ function alterarContexto(contexto) {
 
 // Musica
 const musicaFocoInput = document.querySelector('#alternar-musica');
-const musica = new Audio('/sons/luna-rise-part-one.mp3');
+const musica = new Audio('sons/luna-rise-part-one.mp3');
 musica.loop = true;
 
 musicaFocoInput.addEventListener('change', () => {
@@ -70,9 +70,9 @@ musicaFocoInput.addEventListener('change', () => {
 });
 
 // Temporizador
-const iniciarAudio = new Audio('/sons/play.wav');
-const pausarAudio = new Audio('/sons/pause.mp3');
-const finalizadoAudio = new Audio('/sons/beep.mp3');
+const iniciarAudio = new Audio('sons/play.wav');
+const pausarAudio = new Audio('sons/pause.mp3');
+const finalizadoAudio = new Audio('sons/beep.mp3');
 let tempoDecorridoEmSegundos = 1500;
 const btComecarPausar = document.querySelector('#start-pause');
 let intervaloId = null;
