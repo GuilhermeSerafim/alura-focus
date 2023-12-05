@@ -72,6 +72,7 @@ const finalizadoAudio = new Audio('/sons/beep.mp3');
 let tempoDecorridoEmSegundos = 5;
 const btComecarPausar = document.querySelector('#start-pause');
 let intervaloId = null;
+const iniciarOuPausarSpan = document.querySelector('#start-pause span');
 
 btComecarPausar.addEventListener('click', iniciarOuPausar);
 
@@ -82,6 +83,8 @@ function iniciarOuPausar() {
         zerar();
         return;
     }
+    
+    iniciarOuPausarSpan.textContent = "Pausar";
     iniciarAudio.play();
     intervaloId = setInterval(contagemRegressiva, 1000);
 }
@@ -90,12 +93,13 @@ function iniciarOuPausar() {
 // E interromper o loop do setInverval
 function zerar() {
     clearInterval(intervaloId);
+    iniciarOuPausarSpan.textContent = "Começar";
     intervaloId = null;
 }
 
 const contagemRegressiva = () => {
     if (tempoDecorridoEmSegundos <= 0) {
-        finalizadoAudio.play();
+        // finalizadoAudio.play();
         zerar();
         alert('Tempo finalizado');
         return; // O return é usado encerrar a execução de uma função
