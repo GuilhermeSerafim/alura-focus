@@ -66,6 +66,8 @@ musicaFocoInput.addEventListener('change', () => {
 });
 
 // Temporizador
+const iniciarAudio = new Audio('/sons/play.wav');
+const pausarAudio = new Audio('/sons/pause.mp3');
 let tempoDecorridoEmSegundos = 5;
 const btComecarPausar = document.querySelector('#start-pause');
 let intervaloId = null;
@@ -75,9 +77,11 @@ btComecarPausar.addEventListener('click', iniciarOuPausar);
 function iniciarOuPausar() {
     // Criado para pausar
     if (intervaloId) { // Esta condição verifica se intervaloId possui um valor
+        pausarAudio.play();
         zerar();
         return;
     }
+    iniciarAudio.play();
     intervaloId = setInterval(contagemRegressiva, 1000);
 }
 
