@@ -68,6 +68,7 @@ musicaFocoInput.addEventListener('change', () => {
 // Temporizador
 const iniciarAudio = new Audio('/sons/play.wav');
 const pausarAudio = new Audio('/sons/pause.mp3');
+const finalizadoAudio = new Audio('/sons/beep.mp3');
 let tempoDecorridoEmSegundos = 5;
 const btComecarPausar = document.querySelector('#start-pause');
 let intervaloId = null;
@@ -94,6 +95,7 @@ function zerar() {
 
 const contagemRegressiva = () => {
     if (tempoDecorridoEmSegundos <= 0) {
+        finalizadoAudio.play();
         zerar();
         alert('Tempo finalizado');
         return; // O return é usado encerrar a execução de uma função
