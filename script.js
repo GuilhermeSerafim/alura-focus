@@ -69,7 +69,7 @@ musicaFocoInput.addEventListener('change', () => {
 const iniciarAudio = new Audio('/sons/play.wav');
 const pausarAudio = new Audio('/sons/pause.mp3');
 const finalizadoAudio = new Audio('/sons/beep.mp3');
-let tempoDecorridoEmSegundos = 5;
+let tempoDecorridoEmSegundos = 1500;
 const btComecarPausar = document.querySelector('#start-pause');
 let intervaloId = null;
 const iniciarOuPausarSpan = document.querySelector('#start-pause span');
@@ -85,7 +85,7 @@ function iniciarOuPausar() {
         zerar();
         return;
     }
-    
+
     iniciarOuPausarSpan.textContent = "Pausar";
     console.log(imgSpan)
     imgSpan.setAttribute('src', `imagens/pause.png`);
@@ -110,5 +110,13 @@ const contagemRegressiva = () => {
         return; // O return é usado encerrar a execução de uma função
     }
     tempoDecorridoEmSegundos -= 1; // Decremento
-    console.log("Temporizador: " + tempoDecorridoEmSegundos);
+    mostrarTempo();
 }
+
+function mostrarTempo() {
+    const tempo = tempoDecorridoEmSegundos;
+    temporizadorNaTela.innerHTML = `${tempo}`;
+}
+
+//Usado para mostrar estaticamente
+mostrarTempo(); //Escopo global
