@@ -14,7 +14,7 @@ musica.loop = true;
 
 //Tempo
 let tempoDecorridoEmSegundos = 5;
-const btComecar = document.querySelector('#start-pause');
+const btComecarPausar = document.querySelector('#start-pause');
 let intervaloId = null;
 
 musicaFocoInput.addEventListener('change', () => {
@@ -26,9 +26,8 @@ musicaFocoInput.addEventListener('change', () => {
 })
 
 btFoco.addEventListener('click', () => {
-    alterarContexto('foco'); //Como a função vem antes de adicionar, ela percorre o array de botoes e limpa os estilos
-    btFoco.classList.add('active'); //Logo em seguida, adiciona se caso ele for clicado (a ultima etapa)
-    //Até outro ser clicado e esse ser removido no foreach do alterarContexto
+    alterarContexto('foco'); //Limpa os estilos
+    btFoco.classList.add('active'); //Adiciona o estilo de ativo em seguida
 })
 
 btCurto.addEventListener('click', () => {
@@ -41,15 +40,16 @@ btLongo.addEventListener('click', () => {
     btLongo.classList.add('active');
 })
 
-//Identificamos código repetido, logo criamos uma função para deixar o código mais inxtuo
+//Identificamos código repetido, logo criamos uma função para deixar o código mais inxuto
 function alterarContexto(contexto) {
-    //Criado para limpar os estilos dos botões anteriores
+    //Limpando estilos
     botoes.forEach((contexto) => {
         contexto.classList.remove('active');
     })
+
+    //Alterando contexto e texto
     html.setAttribute('data-contexto', contexto);
     banner.setAttribute('src', `/imagens/${contexto}.png`);
-    //O Inner html também é usado para fazer lista com +=
     switch (contexto) {
         case 'foco':
             titulo.innerHTML = `Otimize sua produtividade, <br>
@@ -66,26 +66,32 @@ function alterarContexto(contexto) {
         default:
             break;
     }
+    //obs: O innerHTML também pode ser usado para fazer lista com +=
+}
+
+//Temporizador
+btComecarPausar.addEventListener('click', iniciarOuPausar);
+
+function iniciarOuPausar() {
+    //Criado para pausar
+    if(intervaloId) { //Esta condição verifica se intervaloId possui um valor
+        zerar();
+        return; 
+    }
+    intervaloId = setInterval(contagemRegressiva, 1000); //Loop que executa a função de acordo com determinado tempo
+}
+
+function zerar() {
+    clearInterval(intervaloId);
+    intervaloId = null;
 }
 
 const contagemRegressiva = () => {
     if(tempoDecorridoEmSegundos <= 0) {
         zerar();
         alert('Tempo finalizado');
-        return;
+        return; //O return é usado encerrar a execução de uma função
     }
-    tempoDecorridoEmSegundos -= 1;
+    tempoDecorridoEmSegundos -= 1; //Decremento
     console.log("Temporizador: " + tempoDecorridoEmSegundos);
-}
-
-btComecar.addEventListener('click', iniciar);
-
-function iniciar() {
-    //Sempre vai executar alguma função em um determinado periodo de tempo
-    intervaloId = setInterval(contagemRegressiva, 1000); 
-}
-
-function zerar() {
-    clearInterval(intervaloId);
-    intervaloId = null;
 }
