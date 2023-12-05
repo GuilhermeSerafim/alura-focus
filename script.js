@@ -73,6 +73,8 @@ let tempoDecorridoEmSegundos = 5;
 const btComecarPausar = document.querySelector('#start-pause');
 let intervaloId = null;
 const iniciarOuPausarSpan = document.querySelector('#start-pause span');
+const imgSpan = document.querySelector('.app__card-primary-butto-icon');
+const temporizadorNaTela = document.querySelector("#timer");
 
 btComecarPausar.addEventListener('click', iniciarOuPausar);
 
@@ -85,6 +87,8 @@ function iniciarOuPausar() {
     }
     
     iniciarOuPausarSpan.textContent = "Pausar";
+    console.log(imgSpan)
+    imgSpan.setAttribute('src', `imagens/pause.png`);
     iniciarAudio.play();
     intervaloId = setInterval(contagemRegressiva, 1000);
 }
@@ -94,6 +98,7 @@ function iniciarOuPausar() {
 function zerar() {
     clearInterval(intervaloId);
     iniciarOuPausarSpan.textContent = "Começar";
+    imgSpan.setAttribute('src', `imagens/play_arrow.png`);
     intervaloId = null;
 }
 
