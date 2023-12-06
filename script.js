@@ -26,7 +26,6 @@ btLongo.addEventListener('click', () => {
     btLongo.classList.add('active');
 })
 
-// Identificamos código repetido, logo criamos uma função para deixar o código mais inxuto
 function alterarContexto(contexto) {
     mostrarTempo();
     // Limpa os estilos removendo a classe 'active' de todos os botões
@@ -91,7 +90,6 @@ function iniciarOuPausar() {
     }
 
     iniciarOuPausarSpan.textContent = "Pausar";
-    console.log(imgSpan)
     imgSpan.setAttribute('src', `imagens/pause.png`);
     iniciarAudio.play();
     intervaloId = setInterval(contagemRegressiva, 1000);
