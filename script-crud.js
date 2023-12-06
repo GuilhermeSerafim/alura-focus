@@ -15,9 +15,6 @@ formAdicionarTarefa.addEventListener('submit', (event) => {
         descricao: textArea.value //Pegando valor digitado e armazenando em uma chave
     }
     tarefas.push(tarefa);
-    //O que o js fez por debaixo dos panos, é pegar o array de objetos tarefas, e colocar toString
-    localStorage.setItem('tarefas', tarefas);
-    //Resultado: tarefas: object Object
-    //Para resolver isso, vamos usar uma API
-    //Em outras palavras, a API vai pegar um objeto e transformá-lo numa string de uma forma que consiga fazer o inverso depois - pegar a string e transformá-la num objeto.
+    //Consumindo para conversão de dados
+    localStorage.setItem('tarefas', JSON.stringify(tarefas));
 });
