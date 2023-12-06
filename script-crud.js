@@ -43,6 +43,7 @@ btAdicionarTarefa.addEventListener('click', () => {
     formAdicionarTarefa.classList.toggle('hidden');
 });
 
+//Adicionando uma nova tarefa
 formAdicionarTarefa.addEventListener('submit', (event) => {
     event.preventDefault();
     //Criando objeto que representa a tarefa
@@ -50,11 +51,15 @@ formAdicionarTarefa.addEventListener('submit', (event) => {
         descricao: textArea.value //Pegando valor digitado e armazenando em uma chave
     }
     tarefas.push(tarefa);
+    //Criado para exibir, assim que adicionado
+    const elementoTarefa = criarElementoTarefa(tarefa);
+    ulTarefas.append(elementoTarefa);
+
     //Consumindo para conversão de dados
     localStorage.setItem('tarefas', JSON.stringify(tarefas));
 });
 
-
+//Iterando entre elementos já existentes
 tarefas.forEach(tarefa => {
     const elementoTarefa = criarElementoTarefa(tarefa);
     ulTarefas.append(elementoTarefa);
