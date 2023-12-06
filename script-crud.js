@@ -1,7 +1,8 @@
 const btAdicionarTarefa = document.querySelector('.app__button--add-task');
 const formAdicionarTarefa = document.querySelector('.app__form-add-task');
 const textArea = document.querySelector('.app__form-textarea');
-const tarefas = []
+//Se, por algum motivo, o localStorage retornou nulo, o nulo não vai quebrar o JSON.parse(), por isso usamos o '|| []'
+const tarefas = JSON.parse(localStorage.getItem('tarefas')) || [];
 
 //Recebe uma tarefa e devolve um HTML que representa essa tarefa.
 function criarElementoTarefa(tarefa) {
