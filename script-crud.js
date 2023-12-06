@@ -3,10 +3,11 @@ const formAdicionarTarefa = document.querySelector('.app__form-add-task');
 const textArea = document.querySelector('.app__form-textarea');
 //Se, por algum motivo, o localStorage retornou nulo, o nulo não vai quebrar o JSON.parse(), por isso usamos o '|| []'
 const tarefas = JSON.parse(localStorage.getItem('tarefas')) || [];
+const ulTarefas = document.querySelector('.app__section-task-list');
 
 //Recebe uma tarefa e devolve um HTML que representa essa tarefa.
 function criarElementoTarefa(tarefa) {
-    //Criando elementos
+    //Criando elementos da lista
     const li = document.createElement('li');
     li.classList.add('app__section-task-list-item');
 
@@ -31,6 +32,8 @@ function criarElementoTarefa(tarefa) {
     li.append(svg);
     li.append(paragrafo);
     li.append(botao);
+
+    return li;
 }
 
 btAdicionarTarefa.addEventListener('click', () => {
@@ -47,4 +50,10 @@ formAdicionarTarefa.addEventListener('submit', (event) => {
     tarefas.push(tarefa);
     //Consumindo para conversão de dados
     localStorage.setItem('tarefas', JSON.stringify(tarefas));
+});
+
+
+tarefas.forEach(tarefa => {
+    const elementoTarefa = criarElementoTarefa(tarefa);
+    ulTarefas.append(elementoTarefa);
 });
