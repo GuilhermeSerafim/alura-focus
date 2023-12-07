@@ -2,9 +2,11 @@ const btAdicionarTarefa = document.querySelector('.app__button--add-task');
 const btCancelar = document.querySelector('.app__form-footer__button--cancel');
 const formAdicionarTarefa = document.querySelector('.app__form-add-task');
 const textArea = document.querySelector('.app__form-textarea');
+const ulTarefas = document.querySelector('.app__section-task-list');
+const paragrafoDescricaoTarefa = document.querySelector('.app__section-active-task-description');
+
 //Se, por algum motivo, o localStorage retornou nulo, o nulo não vai quebrar o JSON.parse(), por isso usamos o '|| []'
 const tarefas = JSON.parse(localStorage.getItem('tarefas')) || [];
-const ulTarefas = document.querySelector('.app__section-task-list');
 
 function atualizarTarefa() {
     //Consumindo para conversão de dados
@@ -33,7 +35,7 @@ function criarElementoTarefa(tarefa) {
     botao.classList.add('app_button-edit');
 
     botao.onclick = () => {
-        debugger
+        // debugger
         const novaDescricao = prompt("Qual é o novo nome da tarefa?");
         if (novaDescricao) {
             //Atualizando camada visual - dom
@@ -53,13 +55,18 @@ function criarElementoTarefa(tarefa) {
     li.append(svg);
     li.append(paragrafo);
     li.append(botao);
+    
+    li.onclick = () => {
+        paragrafoDescricaoTarefa.textContent = tarefa.descricao;
+        li.classList.add('app__section-task-list-item-active');
+    }
 
     return li;
 }
 
 function cancelarTarefa() {
     textArea.value = "";
-    formAdicionarTarefa.classList.toggle('hidden');
+    formAdicionarTarefa.classList.add('hidden');
 }
 
 btCancelar.addEventListener('click', cancelarTarefa);
