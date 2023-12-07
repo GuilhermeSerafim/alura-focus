@@ -5,6 +5,11 @@ const textArea = document.querySelector('.app__form-textarea');
 const tarefas = JSON.parse(localStorage.getItem('tarefas')) || [];
 const ulTarefas = document.querySelector('.app__section-task-list');
 
+function atualizarTarefa() {
+    //Consumindo para conversão de dados
+    localStorage.setItem('tarefas', JSON.stringify(tarefas));
+}
+
 //Recebe uma tarefa e devolve um HTML que representa essa tarefa.
 function criarElementoTarefa(tarefa) {
     //Criando elementos da lista
@@ -60,9 +65,8 @@ formAdicionarTarefa.addEventListener('submit', (event) => {
     //Exibir tarefas assim que enviado o formulário
     const elementoTarefa = criarElementoTarefa(tarefa); //Criar
     ulTarefas.append(elementoTarefa); //Exibir
-
-    //Consumindo para conversão de dados
-    localStorage.setItem('tarefas', JSON.stringify(tarefas));
+    atualizarTarefa();
+    
 });
 
 //Iterando entre elementos já existentes
