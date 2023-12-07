@@ -1,4 +1,5 @@
 const btAdicionarTarefa = document.querySelector('.app__button--add-task');
+const btCancelar = document.querySelector('.app__form-footer__button--cancel');
 const formAdicionarTarefa = document.querySelector('.app__form-add-task');
 const textArea = document.querySelector('.app__form-textarea');
 //Se, por algum motivo, o localStorage retornou nulo, o nulo não vai quebrar o JSON.parse(), por isso usamos o '|| []'
@@ -55,6 +56,13 @@ function criarElementoTarefa(tarefa) {
 
     return li;
 }
+
+function cancelarTarefa() {
+    textArea.value = "";
+    formAdicionarTarefa.classList.toggle('hidden');
+}
+
+btCancelar.addEventListener('click', cancelarTarefa);
 
 btAdicionarTarefa.addEventListener('click', () => {
     //toggle faz a alternância de classe
