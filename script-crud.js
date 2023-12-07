@@ -58,15 +58,17 @@ function criarElementoTarefa(tarefa) {
     li.append(botao);
 
     li.onclick = () => {
+        //Movemos esse código, para que ele seja executado independente do if
+        //Removendo estilos
         const listaTarefas = document.querySelectorAll('.app__section-task-list-item');
         listaTarefas.forEach(linha => {
             linha.classList.remove('app__section-task-list-item-active');
 
         });
+        //Para tirar o texto 'em andamento' quando selecionarmos a mesma tarefa
         if (tarefaSelecionada == tarefa) {
             paragrafoDescricaoTarefa.textContent = '';
             tarefaSelecionada = null;
-            
             //Early return
             return;
         }

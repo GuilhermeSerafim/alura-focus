@@ -109,6 +109,13 @@ const contagemRegressiva = () => {
         finalizadoAudio.play();
         zerar();
         alert('Tempo finalizado');
+        //Se o contexto atual for foco
+        const focoAtivo  = html.getAttribute('data-contexto') == 'foco';
+        if(focoAtivo) {
+            //O evento é "disparado" ou "transmitido" para todo o documento 
+            const evento = new CustomEvent('FocoFinalizado')
+            document.dispatchEvent(evento);
+        }
         return; // O return é usado encerrar a execução de uma função
     }
     tempoDecorridoEmSegundos -= 1; // Decremento
