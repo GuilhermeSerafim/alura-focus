@@ -7,6 +7,7 @@ const paragrafoDescricaoTarefa = document.querySelector('.app__section-active-ta
 
 //Se, por algum motivo, o localStorage retornou nulo, o nulo não vai quebrar o JSON.parse(), por isso usamos o '|| []'
 const tarefas = JSON.parse(localStorage.getItem('tarefas')) || [];
+let tarefaSelecionada = null;
 
 function atualizarTarefa() {
     //Consumindo para conversão de dados
@@ -57,12 +58,20 @@ function criarElementoTarefa(tarefa) {
     li.append(botao);
 
     li.onclick = () => {
-        paragrafoDescricaoTarefa.textContent = tarefa.descricao;
         const listaTarefas = document.querySelectorAll('.app__section-task-list-item');
         listaTarefas.forEach(linha => {
             linha.classList.remove('app__section-task-list-item-active');
 
         });
+        if (tarefaSelecionada == tarefa) {
+            paragrafoDescricaoTarefa.textContent = '';
+            tarefaSelecionada = null;
+            
+            //Early return
+            return;
+        }
+        tarefaSelecionada = tarefa;
+        paragrafoDescricaoTarefa.textContent = tarefa.descricao;
         li.classList.add('app__section-task-list-item-active');
     }
 
