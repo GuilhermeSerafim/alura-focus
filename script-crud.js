@@ -55,9 +55,14 @@ function criarElementoTarefa(tarefa) {
     li.append(svg);
     li.append(paragrafo);
     li.append(botao);
-    
+
     li.onclick = () => {
         paragrafoDescricaoTarefa.textContent = tarefa.descricao;
+        const listaTarefas = document.querySelectorAll('.app__section-task-list-item');
+        listaTarefas.forEach(linha => {
+            linha.classList.remove('app__section-task-list-item-active');
+
+        });
         li.classList.add('app__section-task-list-item-active');
     }
 
