@@ -26,6 +26,11 @@ function criarElementoTarefa(tarefa) {
     const botao = document.createElement('button');
     botao.classList.add('app_button-edit');
 
+    botao.onclick = () => {
+        const novaDescricao = prompt("Qual é o novo nome da tarefa?");
+        paragrafo.textContent = novaDescricao;
+    }
+
     const imgBotao = document.createElement('img');
     imgBotao.setAttribute('src', "/imagens/edit.png");
 
@@ -51,15 +56,17 @@ formAdicionarTarefa.addEventListener('submit', (event) => {
         descricao: textArea.value //Pegando valor digitado e armazenando em uma chave
     }
     tarefas.push(tarefa);
-    //Criado para exibir, assim que adicionado
-    const elementoTarefa = criarElementoTarefa(tarefa);
-    ulTarefas.append(elementoTarefa);
+
+    //Exibir tarefas assim que enviado o formulário
+    const elementoTarefa = criarElementoTarefa(tarefa); //Criar
+    ulTarefas.append(elementoTarefa); //Exibir
 
     //Consumindo para conversão de dados
     localStorage.setItem('tarefas', JSON.stringify(tarefas));
 });
 
 //Iterando entre elementos já existentes
+//Exibir tarefas existentes
 tarefas.forEach(tarefa => {
     const elementoTarefa = criarElementoTarefa(tarefa);
     ulTarefas.append(elementoTarefa);
