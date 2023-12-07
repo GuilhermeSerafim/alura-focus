@@ -33,7 +33,12 @@ function criarElementoTarefa(tarefa) {
 
     botao.onclick = () => {
         const novaDescricao = prompt("Qual é o novo nome da tarefa?");
+        //Atualizando camada visual
         paragrafo.textContent = novaDescricao;
+        //Atualizando camada de dados do objeto
+        tarefa.descricao = novaDescricao;
+        //Atualizando armazenamento local
+        atualizarTarefa();
     }
 
     const imgBotao = document.createElement('img');
@@ -53,7 +58,7 @@ btAdicionarTarefa.addEventListener('click', () => {
     formAdicionarTarefa.classList.toggle('hidden');
 });
 
-//Adicionando uma nova tarefa
+//Enviando tarefa para o array de tarefas, assim que enviado o form
 formAdicionarTarefa.addEventListener('submit', (event) => {
     event.preventDefault();
     //Criando objeto que representa a tarefa
@@ -66,11 +71,13 @@ formAdicionarTarefa.addEventListener('submit', (event) => {
     const elementoTarefa = criarElementoTarefa(tarefa); //Criar
     ulTarefas.append(elementoTarefa); //Exibir
     atualizarTarefa();
-    
+    textArea.value = '';
+    formAdicionarTarefa.classList.add('hidden');
 });
 
 //Iterando entre elementos já existentes
 //Exibir tarefas existentes
+//Serve para mostrar as tarefas que estão no localStorage
 tarefas.forEach(tarefa => {
     const elementoTarefa = criarElementoTarefa(tarefa);
     ulTarefas.append(elementoTarefa);
