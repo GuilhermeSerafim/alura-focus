@@ -57,7 +57,7 @@ function criarElementoTarefa(tarefa) {
     const imgBotao = document.createElement('img');
     imgBotao.setAttribute('src', "/imagens/edit.png");
 
-    //Posicionando
+    //Posicionando 
     botaoEditar.append(imgBotao);
     li.append(svg);
     li.append(paragrafo);
