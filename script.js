@@ -113,7 +113,7 @@ const contagemRegressiva = () => {
         const focoAtivo = html.getAttribute('data-contexto') == 'foco';
 
         if (focoAtivo) {
-            const evento = new CustomEvent('FocoFinalizado')
+            const evento = new CustomEvent('FocoFinalizado');
             //Broadcast | O evento é "disparado" ou "transmitido" para todo o documento
             document.dispatchEvent(evento);
         }

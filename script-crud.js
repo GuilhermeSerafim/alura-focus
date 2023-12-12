@@ -20,6 +20,7 @@ function atualizarTarefa() {
 }
 
 //Recebe uma tarefa e devolve um HTML que representa essa tarefa.
+//Um foreach percorre essa função para criar todos os elementos que estão na localStorage, quando carregamos a pagina
 function criarElementoTarefa(tarefa) {
     //Criando elementos da lista
     const li = document.createElement('li');
@@ -62,33 +63,42 @@ function criarElementoTarefa(tarefa) {
     li.append(paragrafo);
     li.append(botaoEditar);
 
-    li.onclick = () => {
-        //Movemos esse código, para que ele seja executado independente do if
-        //Limpando estilos
-        const todosElementosTarefas = document.querySelectorAll('.app__section-task-list-item');
-        todosElementosTarefas.forEach(tarefa => {
-            tarefa.classList.remove('app__section-task-list-item-active');
-
-        });
-
-        //Para tirar o texto 'em andamento' quando selecionarmos a mesma tarefa
-        if (tarefaSelecionada == tarefa) {
-            //Desselecionando tarefa se caso, a mesma for clicada novamente
-            paragrafoDescricaoTarefa.textContent = '';
-            tarefaSelecionada = null;
-            liTarefaSelecionada = null;
-            //Early return
-            return;
+    //Como guardamos a chave completa no localStorage, manipulamos essa chave nessa função que vai ser percorrida por um for
+    //E de acordo com o valor que estiver naquela tarefa, já vai vir recarregado com as alterações que desejamos
+    if (tarefa.completa) {
+        li.classList.add('app__section-task-list-item-complete');
+        botaoEditar.setAttribute('disabled', 'disabled');
+    } else {
+        li.onclick = () => {
+            //Movemos esse código, para que ele seja executado independente do if
+            //Limpando estilos
+            const todosElementosTarefas = document.querySelectorAll('.app__section-task-list-item');
+            todosElementosTarefas.forEach(tarefa => {
+                tarefa.classList.remove('app__section-task-list-item-active');
+    
+            });
+    
+            //Para tirar o texto 'em andamento' quando selecionarmos a mesma tarefa
+            if (tarefaSelecionada == tarefa) {
+                //Desselecionando tarefa se caso, a mesma for clicada novamente
+                paragrafoDescricaoTarefa.textContent = '';
+                tarefaSelecionada = null;
+                liTarefaSelecionada = null;
+                //Early return
+                return;
+            }
+            //Identificando tarefa da vez
+            tarefaSelecionada = tarefa;
+            liTarefaSelecionada = li;
+            paragrafoDescricaoTarefa.textContent = tarefa.descricao;
+            //Adicionando estilo ativo | Selecionando tarefa
+            li.classList.add('app__section-task-list-item-active');
         }
-        //Identificando tarefa da vez
-        tarefaSelecionada = tarefa;
-        liTarefaSelecionada = li;
-        paragrafoDescricaoTarefa.textContent = tarefa.descricao;
-        //Adicionando estilo ativo | Selecionando tarefa
-        li.classList.add('app__section-task-list-item-active');
     }
 
-    return li;  
+   
+
+    return li;
 }
 
 function cancelarTarefa() {
@@ -120,9 +130,8 @@ formAdicionarTarefa.addEventListener('submit', (event) => {
     formAdicionarTarefa.classList.add('hidden');
 });
 
-//Iterando entre elementos já existentes
+//Iterando entre elementos já existentes na localStorage
 //Exibir tarefas existentes
-//Serve para mostrar as tarefas que estão no localStorage
 tarefas.forEach(tarefa => {
     const elementoTarefa = criarElementoTarefa(tarefa);
     ulTarefas.append(elementoTarefa);
@@ -130,10 +139,13 @@ tarefas.forEach(tarefa => {
 
 //Reagindo ao broadcast criado no script.js
 document.addEventListener('FocoFinalizado', () => {
-    if(tarefaSelecionada && liTarefaSelecionada) {
+    if (tarefaSelecionada && liTarefaSelecionada) {
         liTarefaSelecionada.classList.remove('app__section-task-list-item-active');
         liTarefaSelecionada.classList.add('app__section-task-list-item-complete');
         liTarefaSelecionada.querySelector('button').setAttribute('disabled', 'disabled');
         paragrafoDescricaoTarefa.textContent = '';
+        //Criando outra chave, para referenciar quando ela estiver completa, e no fim atualizo o local storage
+        tarefaSelecionada.completa = true;
+        atualizarTarefa();
     }
 });
