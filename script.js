@@ -9,7 +9,7 @@ const listaDeBotoes = document.querySelectorAll('.app__card-button'); //Array de
 
 // Manipulando o dom da página inteira com os estilos e textos
 btFoco.addEventListener('click', () => {
-    tempoDecorridoEmSegundos = 1500;
+    tempoDecorridoEmSegundos = 15; //Para teste 
     alterarContexto('foco');
     btFoco.classList.add('active'); // Adiciona o estilo de ativo
 })
@@ -26,7 +26,6 @@ btLongo.addEventListener('click', () => {
     btLongo.classList.add('active');
 })
 
-// Identificamos código repetido, logo criamos uma função para deixar o código mais inxuto
 function alterarContexto(contexto) {
     mostrarTempo();
     // Limpa os estilos removendo a classe 'active' de todos os botões
@@ -91,7 +90,6 @@ function iniciarOuPausar() {
     }
 
     iniciarOuPausarSpan.textContent = "Pausar";
-    console.log(imgSpan)
     imgSpan.setAttribute('src', `imagens/pause.png`);
     iniciarAudio.play();
     intervaloId = setInterval(contagemRegressiva, 1000);
@@ -111,6 +109,14 @@ const contagemRegressiva = () => {
         finalizadoAudio.play();
         zerar();
         alert('Tempo finalizado');
+        //Se o contexto atual for foco
+        const focoAtivo = html.getAttribute('data-contexto') == 'foco';
+
+        if (focoAtivo) {
+            const evento = new CustomEvent('FocoFinalizado');
+            //Broadcast | O evento é "disparado" ou "transmitido" para todo o documento
+            document.dispatchEvent(evento);
+        }
         return; // O return é usado encerrar a execução de uma função
     }
     tempoDecorridoEmSegundos -= 1; // Decremento
@@ -120,7 +126,7 @@ const contagemRegressiva = () => {
 function mostrarTempo() {
     // tempoDecorridoEmSegundos é mudado quando um novo contexto é escolhido.
     const tempo = new Date(tempoDecorridoEmSegundos * 1000);
-    const tempoFormatado = tempo.toLocaleTimeString('pt-br', {minute: '2-digit', second: '2-digit'});
+    const tempoFormatado = tempo.toLocaleTimeString('pt-br', { minute: '2-digit', second: '2-digit' });
     temporizadorNaTela.innerHTML = `${tempoFormatado}`;
 }
 
