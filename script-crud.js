@@ -7,8 +7,13 @@ const paragrafoDescricaoTarefa = document.querySelector('.app__section-active-ta
 
 //Se, por algum motivo, o localStorage retornou nulo, o nulo não vai quebrar o JSON.parse(), por isso usamos o '|| []'
 const tarefas = JSON.parse(localStorage.getItem('tarefas')) || [];
-let tarefaSelecionada = null;
 
+//Para saber se a tarefa foi selecionada, e desativar ela, se clicar novamente
+let tarefaSelecionada = null; //objeto (chave:valor)
+//Assim que finalizarmos o foco, usaremos essa variavel (tarefa completa)
+let liTarefaSelecionada = null; //elemento li (html)
+
+//Atualizando armazenamento local
 function atualizarTarefa() {
     //Consumindo para conversão de dados
     localStorage.setItem('tarefas', JSON.stringify(tarefas));
@@ -32,10 +37,10 @@ function criarElementoTarefa(tarefa) {
     paragrafo.textContent = tarefa.descricao;
     paragrafo.classList.add('app__section-task-list-item-description');
 
-    const botao = document.createElement('button');
-    botao.classList.add('app_button-edit');
+    const botaoEditar = document.createElement('button');
+    botaoEditar.classList.add('app_button-edit');
 
-    botao.onclick = () => {
+    botaoEditar.onclick = () => {
         // debugger
         const novaDescricao = prompt("Qual é o novo nome da tarefa?");
         if (novaDescricao) {
@@ -52,32 +57,38 @@ function criarElementoTarefa(tarefa) {
     imgBotao.setAttribute('src', "/imagens/edit.png");
 
     //Posicionando
-    botao.append(imgBotao);
+    botaoEditar.append(imgBotao);
     li.append(svg);
     li.append(paragrafo);
-    li.append(botao);
+    li.append(botaoEditar);
 
     li.onclick = () => {
         //Movemos esse código, para que ele seja executado independente do if
-        //Removendo estilos
-        const listaTarefas = document.querySelectorAll('.app__section-task-list-item');
-        listaTarefas.forEach(linha => {
-            linha.classList.remove('app__section-task-list-item-active');
+        //Limpando estilos
+        const todosElementosTarefas = document.querySelectorAll('.app__section-task-list-item');
+        todosElementosTarefas.forEach(tarefa => {
+            tarefa.classList.remove('app__section-task-list-item-active');
 
         });
+
         //Para tirar o texto 'em andamento' quando selecionarmos a mesma tarefa
         if (tarefaSelecionada == tarefa) {
+            //Desselecionando tarefa se caso, a mesma for clicada novamente
             paragrafoDescricaoTarefa.textContent = '';
             tarefaSelecionada = null;
+            liTarefaSelecionada = null;
             //Early return
             return;
         }
+        //Identificando tarefa da vez
         tarefaSelecionada = tarefa;
+        liTarefaSelecionada = li;
         paragrafoDescricaoTarefa.textContent = tarefa.descricao;
+        //Adicionando estilo ativo | Selecionando tarefa
         li.classList.add('app__section-task-list-item-active');
     }
 
-    return li;
+    return li;  
 }
 
 function cancelarTarefa() {
@@ -115,4 +126,14 @@ formAdicionarTarefa.addEventListener('submit', (event) => {
 tarefas.forEach(tarefa => {
     const elementoTarefa = criarElementoTarefa(tarefa);
     ulTarefas.append(elementoTarefa);
+});
+
+//Reagindo ao broadcast criado no script.js
+document.addEventListener('FocoFinalizado', () => {
+    if(tarefaSelecionada && liTarefaSelecionada) {
+        liTarefaSelecionada.classList.remove('app__section-task-list-item-active');
+        liTarefaSelecionada.classList.add('app__section-task-list-item-complete');
+        liTarefaSelecionada.querySelector('button').setAttribute('disabled', 'disabled');
+        paragrafoDescricaoTarefa.textContent = '';
+    }
 });

@@ -9,7 +9,7 @@ const listaDeBotoes = document.querySelectorAll('.app__card-button'); //Array de
 
 // Manipulando o dom da página inteira com os estilos e textos
 btFoco.addEventListener('click', () => {
-    tempoDecorridoEmSegundos = 1500;
+    tempoDecorridoEmSegundos = 15; //Para teste 
     alterarContexto('foco');
     btFoco.classList.add('active'); // Adiciona o estilo de ativo
 })
@@ -110,10 +110,11 @@ const contagemRegressiva = () => {
         zerar();
         alert('Tempo finalizado');
         //Se o contexto atual for foco
-        const focoAtivo  = html.getAttribute('data-contexto') == 'foco';
-        if(focoAtivo) {
-            //O evento é "disparado" ou "transmitido" para todo o documento 
+        const focoAtivo = html.getAttribute('data-contexto') == 'foco';
+
+        if (focoAtivo) {
             const evento = new CustomEvent('FocoFinalizado')
+            //Broadcast | O evento é "disparado" ou "transmitido" para todo o documento
             document.dispatchEvent(evento);
         }
         return; // O return é usado encerrar a execução de uma função
@@ -125,7 +126,7 @@ const contagemRegressiva = () => {
 function mostrarTempo() {
     // tempoDecorridoEmSegundos é mudado quando um novo contexto é escolhido.
     const tempo = new Date(tempoDecorridoEmSegundos * 1000);
-    const tempoFormatado = tempo.toLocaleTimeString('pt-br', {minute: '2-digit', second: '2-digit'});
+    const tempoFormatado = tempo.toLocaleTimeString('pt-br', { minute: '2-digit', second: '2-digit' });
     temporizadorNaTela.innerHTML = `${tempoFormatado}`;
 }
 
