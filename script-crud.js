@@ -161,7 +161,7 @@ const removerTarefas = (somenteCompletas) => {
         tarefaConcluida.remove();
     });
     //Removendo no armazenamento local
-    tarefas = tarefas.filter(tarefa => !tarefa.completa);
+    tarefas = somenteCompletas ? tarefas.filter(tarefa => !tarefa.completa) : [];
     atualizarTarefa();
 }
 
