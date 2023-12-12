@@ -5,8 +5,10 @@ const textArea = document.querySelector('.app__form-textarea');
 const ulTarefas = document.querySelector('.app__section-task-list');
 const paragrafoDescricaoTarefa = document.querySelector('.app__section-active-task-description');
 
+const btRemoverConcluidas = document.querySelector('#btn-remover-concluidas'); 
+
 //Se, por algum motivo, o localStorage retornou nulo, o nulo não vai quebrar o JSON.parse(), por isso usamos o '|| []'
-const tarefas = JSON.parse(localStorage.getItem('tarefas')) || [];
+let tarefas = JSON.parse(localStorage.getItem('tarefas')) || [];
 
 //Para saber se a tarefa foi selecionada, e desativar ela, se clicar novamente
 let tarefaSelecionada = null; //objeto (chave:valor)
@@ -149,3 +151,15 @@ document.addEventListener('FocoFinalizado', () => {
         atualizarTarefa();
     }
 });
+
+//Remover itens concluidos
+btRemoverConcluidas.onclick = () => {
+    const seletorDeTarefasCompletas = ".app__section-task-list-item-complete";
+    document.querySelectorAll(seletorDeTarefasCompletas).forEach(tarefaConcluida => {
+        //Removendo camada visual
+        tarefaConcluida.remove();
+    });
+    //Removendo no armazenamento local
+    tarefas = tarefas.filter(tarefa => !tarefa.completa);
+    atualizarTarefa();
+}
