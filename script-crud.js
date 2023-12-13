@@ -40,6 +40,10 @@ function criarElementoTarefaERecriarTarefasExistentesDoLocalStorage(tarefa) {
             <path d="M9 16.1719L19.5938 5.57812L21 6.98438L9 18.9844L3.42188 13.4062L4.82812 12L9 16.1719Z" fill="#01080E"></path>
         </svg>
     `
+    const imgApagar = document.createElement('img');
+    imgApagar.setAttribute('src', "/imagens/trash.svg");
+    imgApagar.classList.add('imgApagar');
+
     const paragrafo = document.createElement('p');
     paragrafo.textContent = tarefa.descricao;
     paragrafo.classList.add('app__section-task-list-item-description');
@@ -60,12 +64,19 @@ function criarElementoTarefaERecriarTarefasExistentesDoLocalStorage(tarefa) {
         };
     }
 
-    const imgBotao = document.createElement('img');
-    imgBotao.setAttribute('src', "imagens/edit.png");
+    imgApagar.onclick = () => {
+        li.remove();
+        const posicaoTarefaASerRemovida = tarefas.indexOf(tarefa); //Removendo camada visual | Devolve um numero da posição no array de tarefas
+        tarefas.splice(posicaoTarefaASerRemovida, 1); //Removendo item do array, indicando a posição e quantos elementos a serem removidos ()
+        atualizarTarefa(); //Atualizando local storage
+    }
+
+    const imgBotaoEditar = document.createElement('img');
+    imgBotaoEditar.setAttribute('src', "imagens/edit.png");
 
     //Posicionando 
-    botaoEditar.append(imgBotao);
-    li.append(svg);
+    botaoEditar.append(imgBotaoEditar);
+    li.append(imgApagar);
     li.append(paragrafo);
     li.append(botaoEditar);
 
