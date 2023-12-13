@@ -5,8 +5,12 @@ const textArea = document.querySelector('.app__form-textarea');
 const ulTarefas = document.querySelector('.app__section-task-list');
 const paragrafoDescricaoTarefa = document.querySelector('.app__section-active-task-description');
 
+const btRemoverConcluidas = document.querySelector('#btn-remover-concluidas');
+const btRemoverTodasTarefas = document.querySelector('#btn-remover-todas');
+
 //Se, por algum motivo, o localStorage retornou nulo, o nulo não vai quebrar o JSON.parse(), por isso usamos o '|| []'
-const tarefas = JSON.parse(localStorage.getItem('tarefas')) || [];
+//Desserialização - String JSON para Objeto javascript
+let tarefas = JSON.parse(localStorage.getItem('tarefas')) || [];
 
 //Para saber se a tarefa foi selecionada, e desativar ela, se clicar novamente
 let tarefaSelecionada = null; //objeto (chave:valor)
@@ -16,12 +20,14 @@ let liTarefaSelecionada = null; //elemento li (html)
 //Atualizando armazenamento local
 function atualizarTarefa() {
     //Consumindo para conversão de dados
-    localStorage.setItem('tarefas', JSON.stringify(tarefas));
+    //Serialização
+    //O local storage so aceita valores em formato de string | E no momento o tarefas estava em objeto javascript {chave: valor}
+    localStorage.setItem('tarefas', JSON.stringify(tarefas)); //Aqui ele insere no local storage "{chave: valor}"
 }
 
 //Recebe uma tarefa e devolve um HTML que representa essa tarefa.
-//Um foreach percorre essa função para criar todos os elementos que estão na localStorage, quando carregamos a pagina
-function criarElementoTarefa(tarefa) {
+//OBS: Um foreach percorre essa função para criar todos os elementos que estão na localStorage, quando recarregamos a pagina
+function criarElementoTarefaERecriarTarefasExistentesDoLocalStorage(tarefa) {
     //Criando elementos da lista
     const li = document.createElement('li');
     li.classList.add('app__section-task-list-item');
@@ -55,7 +61,7 @@ function criarElementoTarefa(tarefa) {
     }
 
     const imgBotao = document.createElement('img');
-    imgBotao.setAttribute('src', "/imagens/edit.png");
+    imgBotao.setAttribute('src', "imagens/edit.png");
 
     //Posicionando 
     botaoEditar.append(imgBotao);
@@ -75,9 +81,9 @@ function criarElementoTarefa(tarefa) {
             const todosElementosTarefas = document.querySelectorAll('.app__section-task-list-item');
             todosElementosTarefas.forEach(tarefa => {
                 tarefa.classList.remove('app__section-task-list-item-active');
-    
+
             });
-    
+
             //Para tirar o texto 'em andamento' quando selecionarmos a mesma tarefa
             if (tarefaSelecionada == tarefa) {
                 //Desselecionando tarefa se caso, a mesma for clicada novamente
@@ -88,15 +94,15 @@ function criarElementoTarefa(tarefa) {
                 return;
             }
             //Identificando tarefa da vez
+            //Adicionando estilo ativo | Selecionando tarefa
             tarefaSelecionada = tarefa;
             liTarefaSelecionada = li;
             paragrafoDescricaoTarefa.textContent = tarefa.descricao;
-            //Adicionando estilo ativo | Selecionando tarefa
             li.classList.add('app__section-task-list-item-active');
         }
     }
 
-   
+
 
     return li;
 }
@@ -123,9 +129,9 @@ formAdicionarTarefa.addEventListener('submit', (event) => {
     tarefas.push(tarefa);
 
     //Exibir tarefas assim que enviado o formulário
-    const elementoTarefa = criarElementoTarefa(tarefa); //Criar
+    const elementoTarefa = criarElementoTarefaERecriarTarefasExistentesDoLocalStorage(tarefa); //Criar
     ulTarefas.append(elementoTarefa); //Exibir
-    atualizarTarefa();
+    atualizarTarefa(); //Atualizando no local storage
     textArea.value = '';
     formAdicionarTarefa.classList.add('hidden');
 });
@@ -133,7 +139,7 @@ formAdicionarTarefa.addEventListener('submit', (event) => {
 //Iterando entre elementos já existentes na localStorage
 //Exibir tarefas existentes
 tarefas.forEach(tarefa => {
-    const elementoTarefa = criarElementoTarefa(tarefa);
+    const elementoTarefa = criarElementoTarefaERecriarTarefasExistentesDoLocalStorage(tarefa);
     ulTarefas.append(elementoTarefa);
 });
 
@@ -149,3 +155,18 @@ document.addEventListener('FocoFinalizado', () => {
         atualizarTarefa();
     }
 });
+
+const removerTarefas = (completa) => {
+    const seletorDeTarefas = completa ? ".app__section-task-list-item-complete" : ".app__section-task-list-item";
+    document.querySelectorAll(seletorDeTarefas).forEach(tarefa => {
+        //Removendo camada visual
+        tarefa.remove();
+    });
+    tarefas = completa ? tarefas.filter(tarefa => !tarefa.completa) : [];
+    //Removendo no armazenamento local
+    atualizarTarefa();
+}
+
+btRemoverConcluidas.onclick = () => removerTarefas(true);
+
+btRemoverTodasTarefas.onclick = () => removerTarefas(false);
