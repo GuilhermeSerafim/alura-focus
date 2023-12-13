@@ -9,7 +9,7 @@ const listaDeBotoes = document.querySelectorAll('.app__card-button'); //Array de
 
 // Manipulando o dom da página inteira com os estilos e textos
 btFoco.addEventListener('click', () => {
-    tempoDecorridoEmSegundos = 15; //Para teste 
+    tempoDecorridoEmSegundos = 1500; //Para teste 
     alterarContexto('foco');
     btFoco.classList.add('active'); // Adiciona o estilo de ativo
 })
