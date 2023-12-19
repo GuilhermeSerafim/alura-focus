@@ -23,6 +23,9 @@ Inspirado no método Pomodoro, o Projeto Fokus incentiva você a "mergulhar fund
 
 Para mais informações ou dúvidas, entre em contato via [e-mail](mailto:guilerstudies@gmail.com).
 
-**[Acesse o Projeto Fokus](https://guilhermeserafim.github.io/alura-focus/)**
+**[Acesse o Projeto Fokus🤿](https://guilhermeserafim.github.io/alura-focus/)**
+
+**[Layout Figma🎨](https://www.figma.com/file/dEaMv34Wd5G7TBMPo8fPlK/Projeto-Fokus?type=design&node-id=35-181&mode=design&t=x434kkPHEmKAiK67-0)**
+
 ## 🌊 Mergulhe Fundo, Respire e Seja Produtivo! 🌊
 ![Mergulhe Fundo](https://media2.giphy.com/media/q1zYlcz024M44XUVg2/giphy.gif)
